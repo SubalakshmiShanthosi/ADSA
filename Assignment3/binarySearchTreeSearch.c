@@ -4,12 +4,11 @@
 #include<math.h>
 #define MAX_SIZE 30
 
-typedef struct node *pointer;
-typedef struct node
+struct node
 {
   int data;
-  pointer left;
-  pointer right;
+  struct node* left;
+  struct node* right;
 };
 
 struct node* createNode(int value)
@@ -46,19 +45,19 @@ void printNodes(struct node* root)
 }
 
 
-int height(struct node* aNode)
+//search for the data in the BST
+bool searchKey(struct node* root,int key)
 {
-  if(aNode==NULL)
-    return -1;
-  else
-    return 1+ (int)fmax((float)height(aNode->left),(float)height(aNode->right));
-}
-
-int countNodes(struct node* root)
-{
-  if(root==NULL)
-    return 0;
-  return 1+ countNodes(root->left) + countNodes(root->right);
+  while(root!=NULL)
+    {
+      if(key==root->data)
+	return true;
+      else if(key<root->data)
+	root=root->left;
+      else if (key>root->data)
+	root=root->right;
+    }
+  return false;
 }
 
 
@@ -77,12 +76,13 @@ int main()
     }
   printf("\nInOrder traversal of elements in BST is given as:\n");
   printNodes(root);
-  /*
-  printf("\n Level order traversal of BST is given below:\n");
-  printLevelOrder(root,size);
-  printf("\nNumber of nodes in BST which is constructed: %d",countNodes(root));
-  printf("\nThe height of BST: %d",height(root));
-  */
+  printf("\nEnter the element to be searched for:");
+  scanf("%d",&key);
+  if(searchKey(root,key))
+    printf("\nKey %d is present in BST",key);
+  else
+  printf("\nKey is not present in constructed BST");
   printf("\n");
   return 0;
 }
+

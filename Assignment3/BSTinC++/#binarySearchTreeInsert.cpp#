@@ -35,6 +35,7 @@ struct node* insertNode(struct node* aNode,int value)
 
 
 //printLevelOrder prints elements at every level of a binary search tree
+
 void printLevelOrder(struct node* root,int noOfEle)
 {
   std::queue<node*> lOqueue;
@@ -58,29 +59,26 @@ void printLevelOrder(struct node* root,int noOfEle)
     }
   cout<<endl;
 }
-
-
-
-//move left or right in BST till reaching for minimum or maximum node,where direction is given by 'L' or 'R' 
-struct node*  minOrMaxBST(struct node* aNode,char direction)
+//move left or right in BST till leave for minimum or maximum node,where direction is given by 'L' or 'R' 
+int  minOrMaxBST(struct node* aNode,char direction)
 {
   if(direction == 'L')
     {
       while(aNode->left !=NULL)
 	aNode=aNode->left;
-      return aNode;
+      return aNode->data;
     }
   else
     {
       while(aNode->right !=NULL)
 	aNode=aNode->right;
-      return aNode;
+      return aNode->right;
     }
 }
 
 struct node* search(struct node* root,int key)
 {
-  if(root==NULL || key==root->data)
+  if(root==NULL || key==root->key)
     return root;
   if(key<root->data)
     return search(root->left,key);
@@ -89,7 +87,7 @@ struct node* search(struct node* root,int key)
 }
 
 /*deleteNode( root reference, key) -> deletes a node by freeing its allocated space and does balancing to restore BST property ,
- * deletion case 1: deleting a leaf node -> make parent pointer to it null and  free space 
+ * deletion case 1: deleting a leaf node -> make parent pointer to it null free space 
  * deletion case 2: when left and right child are present find max of left subtree replace the data of it to the element , free space of the max node
  * deletion case 3: when the node has only right child make its parent point to it's right successor 
  * 
@@ -99,38 +97,9 @@ struct node* search(struct node* root,int key)
  *
  */
 
-
-struct node* deleteNode(struct node* root,int keyDel)
+boolean deleteNode(struct node* root,int keyDel)
 {
-  if(root==NULL)
-    return NULL;
-  if(keyDel < root->data)
-    root=deleteNode(root->left,keyDel);
-  else if(keyDel > root->data)
-    root=deleteNode(root->right,keyDel);
-  else
-    {
-      
-      if(root->left == NULL)
-	{
-	  struct node* temp=root->right;
-	  free(root);
-	  return temp;
-	}
-      else if(root->right == NULL)
-	{
-	  struct node* temp=root->left;
-	  free(root);
-	  return temp;
-	}
-      else
-	{
-	  struct node* temp=minOrMaxBST(root->right,'L');
-	  root->data=temp->data;
-	  root->right=deleteNode(root->right,temp->data);
-	}
-    }
-  return root;
+
 }
 
 
@@ -149,13 +118,10 @@ int main()
     root=insertNode(root,aElement);
     }
   printLevelOrder(root,noOfEle);
-  cout<<"Minimum element is"<<minOrMaxBST(root,'L')->data<<endl;
-  cout<<"Maximum element is"<<minOrMaxBST(root,'R')->data<<endl;
+  cout<<"Minimum element is"<<minOrMaxBST(root,'L')<<endl;
+  cout<<"Maximum element is"<<minOrMaxBST(root,'R')<<endl;
   cout<<"\n\nEnter the number which is to be removed from the constructed BST"<<endl;
   cin>>aElementToDelete;
   deleteNode(root,aElementToDelete);
-  cout<<"After deleting"<<aElementToDelete<<"Altered BST in level order is:"<<endl;
-  printLevelOrder(root,noOfEle);
-  cout<<endl;
   return 0;
 }
