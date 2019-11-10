@@ -29,18 +29,6 @@ int findKthLargestElement(int inputOne[],int size1,int inputTwo[],int size2,int 
 	}
 	
     }
-
-  //since the comparision count is not exhaused and you have to do last comparisions
-  if(k==1 && inputOne[i]<kthLargest)
-    {
-     kthLargest=inputOne[i];
-     k=k-1;
-    }
-  else if(k==1 && inputTwo[j]<kthLargest)
-    {
-      kthLargest=inputTwo[j];
-      k=k-1;
-    }
   return kthLargest;
 }
 
