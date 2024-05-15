@@ -72,6 +72,7 @@ public class MergeSort {
         System.out.println();
       
         int[] mergedArr = mergedTwoSortedArr(firstHalf,secondHalf);
+        System.out.println("ResultIntermediate:--"+ Arrays.toString(mergedArr));
         return mergedArr;
     }
 
